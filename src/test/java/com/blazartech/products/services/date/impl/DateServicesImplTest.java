@@ -154,20 +154,24 @@ public class DateServicesImplTest {
     public void testGetCurrentDate() {
         logger.info("get current date");
         
-        /* I'm not sure how else to test this one other than by formatting the
-            current date and what the service gives as current date and confirming
-            they are the same. */
-        Date d = new Date();
-        String expectedFormattedString = dateServices.formatDate(d);
+        Date d = new Date(); // the true current date
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
         Date currentDate = dateServices.getCurrentDate();
-        String result = dateServices.formatDate(currentDate);
-        assertEquals(expectedFormattedString, result);
+        Calendar current = Calendar.getInstance();
+        current.setTime(currentDate);
+        
+        // verify the date part
+        int month = c.get(Calendar.MONTH), currentMonth = current.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR), currentYear = current.get(Calendar.YEAR);
+        int day = c.get(Calendar.DAY_OF_MONTH), currentDay = current.get(Calendar.DAY_OF_MONTH);
+        assertEquals(currentMonth, month);
+        assertEquals(currentYear, year);
+        assertEquals(currentDay, day);
         
         // verify the time part
-        Calendar c = Calendar.getInstance();
-        c.setTime(currentDate);
-        int hours = c.get(Calendar.HOUR_OF_DAY);
-        int minutes = c.get(Calendar.MINUTE);
+        int hours = current.get(Calendar.HOUR_OF_DAY);
+        int minutes = current.get(Calendar.MINUTE);
         assertEquals(hours, 0);
         assertEquals(minutes, 0);
     }
