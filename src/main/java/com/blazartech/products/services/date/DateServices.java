@@ -52,4 +52,16 @@ public interface DateServices {
      * @return
      */
     public Date parseDate(String date);
+    
+    /**
+     * get the current timestamp
+     * @return current timestamp
+     */
+    public Date now();
+    
+    /**
+     * get the current date.  the time will be midnight on that date
+     * @return current date
+     */
+    public Date getCurrentDate();
 }

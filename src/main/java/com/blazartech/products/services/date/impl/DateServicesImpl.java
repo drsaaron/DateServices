@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.blazartech.products.services.date.impl;
 
 import com.blazartech.products.services.date.DateServices;
@@ -23,7 +22,6 @@ import org.springframework.stereotype.Component;
 /*
 $Log$
 ********************************************************************************/
-
 @Component
 public class DateServicesImpl implements DateServices {
 
@@ -44,7 +42,7 @@ public class DateServicesImpl implements DateServices {
         }
         return false;
     }
-    
+
     @Value("${dateServices.date.format}")
     private String dateFormat;
 
@@ -68,5 +66,16 @@ public class DateServicesImpl implements DateServices {
         }
     }
 
-    
+    @Override
+    public Date now() {
+        return new Date();
+    }
+
+    @Override
+    public Date getCurrentDate() {
+        // convert to a string to get just the date part, then re-parse it.
+        String dateString = formatDate(now());
+        return parseDate(dateString);
+    }
+
 }

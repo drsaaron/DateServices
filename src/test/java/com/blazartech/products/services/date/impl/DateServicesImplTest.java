@@ -9,6 +9,7 @@ import com.blazartech.products.services.date.DateServices;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import org.apache.log4j.Logger;
 import org.junit.After;
@@ -149,4 +150,25 @@ public class DateServicesImplTest {
         assertEquals(expectedDate, result);
     }
 
+    @Test
+    public void testGetCurrentDate() {
+        logger.info("get current date");
+        
+        /* I'm not sure how else to test this one other than by formatting the
+            current date and what the service gives as current date and confirming
+            they are the same. */
+        Date d = new Date();
+        String expectedFormattedString = dateServices.formatDate(d);
+        Date currentDate = dateServices.getCurrentDate();
+        String result = dateServices.formatDate(currentDate);
+        assertEquals(expectedFormattedString, result);
+        
+        // verify the time part
+        Calendar c = Calendar.getInstance();
+        c.setTime(currentDate);
+        int hours = c.get(Calendar.HOUR_OF_DAY);
+        int minutes = c.get(Calendar.MINUTE);
+        assertEquals(hours, 0);
+        assertEquals(minutes, 0);
+    }
 }
