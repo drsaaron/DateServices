@@ -33,9 +33,9 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
-    DateServicesImplTest.DateServicesConfig.class
-}
-)
+    DateServicesImplTest.DateServicesConfig.class,
+    DateFormatConfiguration.class
+})
 public class DateServicesImplTest {
 
     private static final Logger logger = Logger.getLogger(DateServicesImplTest.class);
@@ -148,6 +148,15 @@ public class DateServicesImplTest {
         Date d = buildDate(expectedDate);
         String result = dateServices.formatDate(d);
         assertEquals(expectedDate, result);
+    }
+
+    @Test
+    public void testParseDate() {
+        logger.info("parseDate");
+        String myDate = "2018-01-12";
+        Date parsedDate = dateServices.parseDate(myDate);
+        Date compareToDate = buildDate(myDate);
+        assertEquals(parsedDate, compareToDate);
     }
 
     @Test
