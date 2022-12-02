@@ -7,10 +7,10 @@ package com.blazartech.products.services.date.impl;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.inject.Provider;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
 
 /**
  *
@@ -23,8 +23,7 @@ public class DateFormatConfiguration {
     private String dateFormat;
     
     @Bean
-    @Scope("prototype")
-    public DateFormat getDateFormat() {
-        return new SimpleDateFormat(dateFormat);
+    public Provider<DateFormat> getDateFormat() {
+        return () -> new SimpleDateFormat(dateFormat);
     }
 }

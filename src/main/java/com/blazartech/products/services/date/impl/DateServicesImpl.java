@@ -7,12 +7,13 @@ package com.blazartech.products.services.date.impl;
 
 import com.blazartech.products.services.date.DateServices;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
-import javax.inject.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -44,13 +45,17 @@ public class DateServicesImpl implements DateServices {
         }
         return false;
     }
-    
-    @Autowired
-    private Provider<DateFormat> dateFormatProvider;
+
+    @Value("${dateServices.date.format}")
+    private String dateFormat;
+
+    private DateFormat dateFormatProvider() {
+	return new SimpleDateFormat(dateFormat);
+    }
 
     @Override
     public String formatDate(Date d) {
-        DateFormat df = dateFormatProvider.get();
+        DateFormat df = dateFormatProvider();
         return (d != null) ? df.format(d) : null;
     }
 
@@ -61,7 +66,7 @@ public class DateServicesImpl implements DateServices {
         }
 
         try {
-            DateFormat df = dateFormatProvider.get();
+            DateFormat df = dateFormatProvider();
             return df.parse(date);
         } catch (ParseException e) {
             throw new RuntimeException("error parsing date " + date + " --> " + e.getMessage(), e);
