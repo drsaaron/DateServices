@@ -6,8 +6,8 @@
 package com.blazartech.products.services.date.impl;
 
 import com.blazartech.products.services.date.DateServices;
+import jakarta.inject.Provider;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
@@ -49,13 +49,12 @@ public class DateServicesImpl implements DateServices {
     @Value("${dateServices.date.format}")
     private String dateFormat;
 
-    private DateFormat dateFormatProvider() {
-	return new SimpleDateFormat(dateFormat);
-    }
+    @Autowired
+    private Provider<DateFormat> dateFormatProvider;
 
     @Override
     public String formatDate(Date d) {
-        DateFormat df = dateFormatProvider();
+        DateFormat df = dateFormatProvider.get();
         return (d != null) ? df.format(d) : null;
     }
 
@@ -66,7 +65,7 @@ public class DateServicesImpl implements DateServices {
         }
 
         try {
-            DateFormat df = dateFormatProvider();
+            DateFormat df = dateFormatProvider.get();
             return df.parse(date);
         } catch (ParseException e) {
             throw new RuntimeException("error parsing date " + date + " --> " + e.getMessage(), e);
