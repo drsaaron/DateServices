@@ -7,6 +7,7 @@ package com.blazartech.products.services.date;
 
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -46,12 +47,26 @@ public interface DateServices {
     public String formatDate(Date d);
     
     /**
+     * return a local date in standard format
+     * @param d
+     * @return 
+     */
+    public String formatDate(LocalDate d);
+    
+    /**
      * parse a date from a standard format.
      * 
      * @param date
      * @return
      */
     public Date parseDate(String date);
+    
+    /**
+     * parse a local date from a standard format
+     * @param date
+     * @return 
+     */
+    public LocalDate parseLocalDate(String date);
     
     /**
      * get the current timestamp
@@ -64,4 +79,18 @@ public interface DateServices {
      * @return current date
      */
     public Date getCurrentDate();
+    
+    /**
+     * convert a date to local date
+     * @param d
+     * @return 
+     */
+    public LocalDate convertDateToLocalDate(Date d);
+    
+    /**
+     * convert a local date back to date
+     * @param d
+     * @return 
+     */
+    public Date convertLocalDateToDate(LocalDate d);
 }

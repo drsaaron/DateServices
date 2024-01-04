@@ -9,7 +9,13 @@ import com.blazartech.products.services.date.DateServices;
 import jakarta.inject.Provider;
 import java.text.DateFormat;
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import static java.util.Calendar.DAY_OF_MONTH;
+import static java.util.Calendar.MONTH;
+import static java.util.Calendar.YEAR;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -83,5 +89,30 @@ public class DateServicesImpl implements DateServices {
         String dateString = formatDate(now());
         return parseDate(dateString);
     }
+
+    @Override
+    public LocalDate convertDateToLocalDate(Date dateToConvert) {
+        Calendar c = Calendar.getInstance();
+        c.setTime(dateToConvert);
+        LocalDate d = LocalDate.now().withYear(c.get(YEAR)).withMonth(c.get(MONTH) + 1).withDayOfMonth(c.get(DAY_OF_MONTH));
+        return d;
+    }
+
+    @Override
+    public Date convertLocalDateToDate(LocalDate dateToConvert) {
+        return java.util.Date.from(dateToConvert.atStartOfDay()
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+    }
     
+    @Override
+    public String formatDate(LocalDate d) {
+        DateTimeFormatter df = DateTimeFormatter.ISO_DATE;
+        return d.format(df);
+    }
+    
+    @Override
+    public LocalDate parseLocalDate(String d) {
+        return LocalDate.parse(d);
+    }
 }

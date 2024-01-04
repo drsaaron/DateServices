@@ -9,6 +9,7 @@ import com.blazartech.products.services.date.DateServices;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import org.junit.After;
@@ -184,5 +185,42 @@ public class DateServicesImplTest {
         int minutes = current.get(Calendar.MINUTE);
         assertEquals(hours, 0);
         assertEquals(minutes, 0);
+    }
+    
+    @Test
+    public void testConvertDateToLocalDate() {
+        
+        logger.info("convertDateToLocalDate");
+        
+        String testDateString = "2024-03-16";
+        Date testDate = buildDate(testDateString);
+        
+        LocalDate localDate = dateServices.convertDateToLocalDate(testDate);
+        
+        assertEquals(LocalDate.parse(testDateString), localDate);
+    }
+    
+    @Test
+    public void testConvertLocalDateToDate() {
+        
+        logger.info("convertLocalDateToDate");
+        
+        String testDateString = "2024-09-11";
+        LocalDate testLocalDate = LocalDate.parse(testDateString);
+        
+        Date date = dateServices.convertLocalDateToDate(testLocalDate);
+        
+        assertEquals(buildDate(testDateString), date);
+    }
+    
+    @Test
+    public void testFormatDate_localDate() {
+        logger.info("testFormatDate_localDate");
+        
+        String testDateString = "2024-07-12";
+        LocalDate ld = LocalDate.parse(testDateString);
+        String formattedString = dateServices.formatDate(ld);
+        
+        assertEquals(testDateString, formattedString);
     }
 }
