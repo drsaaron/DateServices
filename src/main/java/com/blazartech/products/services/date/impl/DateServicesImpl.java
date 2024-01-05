@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.blazartech.products.services.date.impl;
 
 import com.blazartech.products.services.date.DateServices;
@@ -19,7 +18,6 @@ import static java.util.Calendar.YEAR;
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Value;
 
 /**
  *
@@ -30,7 +28,6 @@ import org.springframework.beans.factory.annotation.Value;
 /*
 $Log$
 ********************************************************************************/
-
 @Component
 public class DateServicesImpl implements DateServices {
 
@@ -51,9 +48,6 @@ public class DateServicesImpl implements DateServices {
         }
         return false;
     }
-
-    @Value("${dateServices.date.format}")
-    private String dateFormat;
 
     @Autowired
     private Provider<DateFormat> dateFormatProvider;
@@ -82,7 +76,7 @@ public class DateServicesImpl implements DateServices {
     public Date now() {
         return new Date();
     }
-    
+
     @Override
     public Date getCurrentDate() {
         // convert to a string to get just the date part, then re-parse it.
@@ -100,17 +94,17 @@ public class DateServicesImpl implements DateServices {
 
     @Override
     public Date convertLocalDateToDate(LocalDate dateToConvert) {
-        return java.util.Date.from(dateToConvert.atStartOfDay()
+        return Date.from(dateToConvert.atStartOfDay()
                 .atZone(ZoneId.systemDefault())
                 .toInstant());
     }
-    
+
     @Override
     public String formatDate(LocalDate d) {
         DateTimeFormatter df = DateTimeFormatter.ISO_DATE;
         return d.format(df);
     }
-    
+
     @Override
     public LocalDate parseLocalDate(String d) {
         return LocalDate.parse(d);
