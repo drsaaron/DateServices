@@ -39,6 +39,15 @@ public interface DateServices {
     public boolean isDateInRange(Date d, Date startDate, Date endDate);
     
     /**
+     * is a given date within a given range.
+     * @param d the date to check
+     * @param startDate start date of range
+     * @param endDate end date of range.  can be null
+     * @return
+     */
+    public boolean isDateInRange(LocalDate d, LocalDate startDate, LocalDate endDate);
+    
+    /**
      * return a date in a standard format.
      * 
      * @param d

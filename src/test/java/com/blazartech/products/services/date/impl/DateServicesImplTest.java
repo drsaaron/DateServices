@@ -91,6 +91,10 @@ public class DateServicesImplTest {
             throw new RuntimeException("error parsing date " + date + " --> " + e.getMessage(), e);
         }
     }
+    
+    private LocalDate buildLocalDate(String date) {
+        return LocalDate.parse(date);
+    }
 
     /**
      * Test of getNextDate method, of class DateServicesImpl.
@@ -136,6 +140,61 @@ public class DateServicesImplTest {
         Date startDate = buildDate("2017-12-15");
         Date endDate = buildDate("2018-01-01");
         boolean expResult = false;
+        boolean result = dateServices.isDateInRange(d, startDate, endDate);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testIsDateInRange_localDate() {
+        logger.info("isDateInRange_localDate");
+        LocalDate d = buildLocalDate("2018-01-01");
+        LocalDate startDate = buildLocalDate("2012-12-15");
+        LocalDate endDate = buildLocalDate("2018-01-15");
+        boolean expResult = true;
+        boolean result = dateServices.isDateInRange(d, startDate, endDate);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testIsDateInRangeWithNullEnd_localDate() {
+        logger.info("isDateInRangeWithNullend_localDate");
+        LocalDate d = buildLocalDate("2018-01-01");
+        LocalDate startDate = buildLocalDate("2012-12-15");
+        LocalDate endDate = null;
+        boolean expResult = true;
+        boolean result = dateServices.isDateInRange(d, startDate, endDate);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testIsDateInRangeOutOfRange_localDate() {
+        logger.info("isDateInRangeOutOfRange_localDate");
+        LocalDate d = buildLocalDate("2018-01-02");
+        LocalDate startDate = buildLocalDate("2012-12-15");
+        LocalDate endDate = buildLocalDate("2018-01-01");
+        boolean expResult = false;
+        boolean result = dateServices.isDateInRange(d, startDate, endDate);
+        assertEquals(expResult, result);
+    }
+    
+    @Test
+    public void testIsDateInRange_localDate_onEndDate() {
+        logger.info("isDateInRange_localDate_onStartDate");
+        LocalDate d = buildLocalDate("2018-01-15");
+        LocalDate startDate = buildLocalDate("2012-01-15");
+        LocalDate endDate = buildLocalDate("2018-01-15");
+        boolean expResult = true;
+        boolean result = dateServices.isDateInRange(d, startDate, endDate);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testIsDateInRangeWithNullEnd_localDate_onStartDate() {
+        logger.info("isDateInRangeWithNullend_localDate");
+        LocalDate d = buildLocalDate("2012-12-15");
+        LocalDate startDate = buildLocalDate("2012-12-15");
+        LocalDate endDate = null;
+        boolean expResult = true;
         boolean result = dateServices.isDateInRange(d, startDate, endDate);
         assertEquals(expResult, result);
     }
@@ -198,6 +257,9 @@ public class DateServicesImplTest {
         LocalDate localDate = dateServices.convertDateToLocalDate(testDate);
         
         assertEquals(LocalDate.parse(testDateString), localDate);
+        assertEquals(2024, localDate.getYear());
+        assertEquals(3, localDate.getMonthValue());
+        assertEquals(16, localDate.getDayOfMonth());
     }
     
     @Test

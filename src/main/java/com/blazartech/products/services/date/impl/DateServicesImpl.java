@@ -48,6 +48,16 @@ public class DateServicesImpl implements DateServices {
         }
         return false;
     }
+    
+    @Override
+    public boolean isDateInRange(LocalDate d, LocalDate startDate, LocalDate endDate) {
+        if (d.isAfter(startDate) || d.isEqual(startDate)) {
+            if (endDate == null || (d.isBefore(endDate) || d.isEqual(endDate))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Autowired
     private Provider<DateFormat> dateFormatProvider;
