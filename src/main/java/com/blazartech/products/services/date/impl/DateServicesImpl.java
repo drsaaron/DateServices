@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import static java.util.Calendar.DATE;
 import static java.util.Calendar.DAY_OF_MONTH;
 import static java.util.Calendar.MONTH;
 import static java.util.Calendar.YEAR;
@@ -119,4 +120,31 @@ public class DateServicesImpl implements DateServices {
     public LocalDate parseLocalDate(String d) {
         return LocalDate.parse(d);
     }
+    
+    @Override
+    public LocalDate getCurrentLocalDate() {
+        return LocalDate.now();
+    }
+    
+    @Override
+    public LocalDate getNextLocalDate(LocalDate d) {
+        return d.plusDays(1);
+    }
+    
+    @Override
+    public LocalDate getPriorLocalDate(LocalDate d) {
+        return d.minusDays(1);
+    }
+    
+    @Override
+    public LocalDate getPriorLocalDate(LocalDate d, int dayCount) {
+        return d.minusDays(dayCount);
+    }
+
+    @Override
+    public LocalDate getPriorMonth(LocalDate d, int monthCount) {
+        return d.minusMonths(monthCount);
+    }
+    
+    
 }

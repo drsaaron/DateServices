@@ -285,4 +285,52 @@ public class DateServicesImplTest {
         
         assertEquals(testDateString, formattedString);
     }
+    
+    @Test
+    public void testGetNextLocalDate() {
+        logger.info("getNextLocalDate");
+        
+        LocalDate value = LocalDate.parse("2025-12-31");
+        LocalDate expectedValue = LocalDate.parse("2026-01-01");
+        
+        LocalDate ret = dateServices.getNextLocalDate(value);
+        
+        assertEquals(expectedValue, ret);
+    }
+    
+    @Test
+    public void testGetPriorLocalDate() {
+        logger.info("getPriorLocalDate");
+        
+        LocalDate expectedValue = LocalDate.parse("2025-12-31");
+        LocalDate value = LocalDate.parse("2026-01-01");
+        
+        LocalDate ret = dateServices.getPriorLocalDate(value);
+        
+        assertEquals(expectedValue, ret);
+    }
+    
+    @Test
+    public void testGetPriorLocalDate_dayCount() {
+        logger.info("getPriorLocalDate_dayCount");
+        
+        LocalDate expectedValue = LocalDate.parse("2025-12-01");
+        LocalDate value = LocalDate.parse("2026-01-01");
+        
+        LocalDate ret = dateServices.getPriorLocalDate(value, 31);
+        
+        assertEquals(expectedValue, ret);
+    }
+    
+    @Test
+    public void testGetPriorMonth() {
+        logger.info("getPriorMonth");
+        
+        LocalDate expectedValue = LocalDate.parse("2025-11-30");
+        LocalDate value = LocalDate.parse("2025-12-31");
+        
+        LocalDate ret = dateServices.getPriorMonth(value, 1);
+        
+        assertEquals(expectedValue, ret);
+    }
 }

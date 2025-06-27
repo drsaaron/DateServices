@@ -28,6 +28,37 @@ public interface DateServices {
      * @return
      */
     public Date getNextDate(Date d);
+    
+    /**
+     * get the day after as local date
+     * @param d
+     * @return 
+     */
+    public LocalDate getNextLocalDate(LocalDate d);
+    
+    
+    /**
+     * get the date before as a local date
+     * @param d
+     * @return 
+     */
+    public LocalDate getPriorLocalDate(LocalDate d);
+    
+    /**
+     * get a date d months prior
+     * @param d
+     * @param monthCount
+     * @return 
+     */
+    public LocalDate getPriorMonth(LocalDate d, int monthCount);
+    
+    /**
+     * get a prior date determined by the dayCount
+     * @param d
+     * @param dayCount
+     * @return 
+     */
+    public LocalDate getPriorLocalDate(LocalDate d, int dayCount);
 
     /**
      * is a given date within a given range.
@@ -88,6 +119,12 @@ public interface DateServices {
      * @return current date
      */
     public Date getCurrentDate();
+    
+    /**
+     * get the current local date
+     * @return 
+     */
+    public LocalDate getCurrentLocalDate();
     
     /**
      * convert a date to local date
